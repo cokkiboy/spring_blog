@@ -41,14 +41,14 @@ public class Board {
 	 @Lob
 	 private String content;
 	 
-	 @ColumnDefault("0")
+	
 	 private int count;
 	 
 	 @ManyToOne(fetch=FetchType.EAGER)// Many =board ,User =One
 	 @JoinColumn(name="userid")
 	 private User user;//db는 오브젝트를 저장할수없다. Fk자바는 오브젝트를 저장할수있다
 	 
-	 @OneToMany(mappedBy="board")
+	 @OneToMany(mappedBy="board",fetch =FetchType.EAGER)
 	
 	 private List<Reply> reply;
 	 @CreationTimestamp
