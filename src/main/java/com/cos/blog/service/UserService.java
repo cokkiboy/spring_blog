@@ -26,8 +26,8 @@ public class UserService {
 	  @Autowired
 		private BCryptPasswordEncoder encoder;
 	  
-	
-	   
+		 
+
 	 @Transactional
 	 public void 회원가입(User user) {
 		  String rawPassword =user.getPassword();
@@ -43,13 +43,24 @@ public class UserService {
 					 .orElseThrow(()->{
 						 return  new IllegalArgumentException("회원 찾기실패");
 					 });
-		   String rawPawPassword =user.getPassword();
-           String encPassword=encoder.encode(rawPawPassword);
-           persistance.setPassword(encPassword);
-           persistance.setEmail(user.getEmail());
-		   userRepository.save(persistance);
-		
+			if (persistance.getOauth() ==null || persistance.getOauth().equals("")) {
+				 String rawPawPassword =user.getPassword();
+		           String encPassword=encoder.encode(rawPawPassword);
+		           persistance.setPassword(encPassword);
+		           persistance.setEmail(user.getEmail());
+				   userRepository.save(persistance);
+				
+			}
+		  
 	  
 	 }
+	 @Transactional(readOnly = true)
+	public User 회원찾기(String username) {
+		 User user =userRepository.findByUsername(username).orElseGet(()->{
+			 
+			 return  new User();
+		 });
+		  return user;
+	}
  
 }
