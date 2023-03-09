@@ -9,7 +9,7 @@
  <a href="/board/${board.id }/updateForm" class="btn btn-warning">수정</a>
   <button id="btn-delete" class="btn btn-danger">삭제</button>
  </c:if>
- 
+ </div>
  <div>
   글번호:<span id="id"><i>${board.id }</i></span>
   작성자:<span ><i>${board.user.username }</i></span>
@@ -27,8 +27,6 @@
 
   <div>${board.content }</div>
 </div>
-
-
 
 
    <div class="card">
@@ -52,7 +50,9 @@
 				<div>${reply.content}</div>
 				<div class="d-flex">
 					<div class="font-italic">작성자 : ${reply.user.username } &nbsp;</div>
-					<button OnClick="index.replyDelete(${board.id},${reply.id})" class="badge">삭제</button>
+					<c:if test="${reply.user.id==principal.user.id }">
+					    <button OnClick="index.replyDelete(${board.id},${reply.id})" class="badge">삭제</button>
+				        </c:if>
 				</div>
 			</li>
 		  </c:forEach>
